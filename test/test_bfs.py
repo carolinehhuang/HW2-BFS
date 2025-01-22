@@ -1,6 +1,7 @@
 # write tests for bfs
 import pytest
 from search import graph
+import networkx as nx
 
 def test_bfs_traversal():
     """
@@ -10,7 +11,26 @@ def test_bfs_traversal():
     that all nodes are being traversed (ie. returns 
     the right number of nodes, in the right order, etc.)
     """
-    pass
+
+    g = graph.Graph('data/tiny_network.adjlist')
+    test = g.bfs("Michael McManus")
+    check = list(nx.bfs_tree(g.graph, source = "Michael McManus").nodes())
+    assert test == check #check that bfs traversal written in graph.py returns the same list and order of nodes as built-in bfs function in network x package does
+
+    test2 = g.bfs("32790644")
+    check2 = list(nx.bfs_tree(g.graph, source="32790644").nodes())
+    assert test2 == check2
+
+    assert len(test) == len(check) #check that the right number of nodes are being traversed
+
+    #test instance edge cases
+    with pytest.raises(ValueError): #start node not in the graph
+        g.bfs("King Julian")
+
+    with pytest.raises(ValueError): #no start node provided
+        g.bfs("")
+
+
 
 def test_bfs():
     """
@@ -23,4 +43,21 @@ def test_bfs():
     Include an additional test for nodes that are not connected 
     which should return None. 
     """
-    pass
+    g = graph.Graph('data/citation_network.adjlist')
+    test = g.bfs("Joseph DeRisi", "Rima Arnaout")
+    check = nx.shortest_path(g.graph, source="Joseph DeRisi", target = "Rima Arnaout")
+    assert test == check  #check that bfs traversal written in graph.py returns the same list and order of nodes as built-in bfs function in network x package does for given start and end node
+
+    test2 = g.bfs("Atul Butte", "Franklin Huang")
+    check2 = nx.shortest_path(g.graph, source="Atul Butte", target = "Franklin Huang")
+    assert test2 == check2 #check that bfs traversal written in graph.py returns the same list and order of nodes as built-in bfs function in network x package does for given start and end node
+
+    #test edge cases
+    no_path = g.bfs("34914736", "Franklin Huang")
+    assert no_path is None #where no path exists between two nodes
+
+    with pytest.raises(ValueError):
+        g.bfs("Tony Capra", "Kowalski")
+
+
+
