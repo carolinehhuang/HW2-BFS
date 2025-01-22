@@ -1,6 +1,11 @@
 # Assignment 2
 Breadth-first search
 
+# BFS Description
+This is an implementation of Breadth First Search, where the code traverses through a graph and visits vertices in the order of their distance from the given source node. It can also be used to find the shortest distance between two nodes in the network. 
+
+The start node is the first to be added to the queue, which is a first in first out structure. It is also the first node to be added to the set of visited nodes. As nodes are popped off the queue, its neighboring nodes are identified, added to the back of the queue if they have not already been visited, and added to the set of visited nodes. When the end node is reached, the code returns the shortest path from the start to end node. If there is no given end node, the code will return the order of visited nodes traversed in the search from closest to furthest from the start node. 
+
 # Assignment Overview
 The purpose of this assignment is to get you comfortable working with graph structures and to implement a breadth-first search function to traverse the graph and find the shortest path between nodes.
 
