@@ -11,8 +11,10 @@ def test_bfs_traversal():
     that all nodes are being traversed (ie. returns 
     the right number of nodes, in the right order, etc.)
     """
-
     g = graph.Graph('data/tiny_network.adjlist')
+
+    total_nodes = len(g.graph)
+
     test = g.bfs("Michael McManus")
     check = list(nx.bfs_tree(g.graph, source = "Michael McManus").nodes())
     assert test == check #check that bfs traversal written in graph.py returns the same list and order of nodes as built-in bfs function in network x package does
@@ -21,7 +23,7 @@ def test_bfs_traversal():
     check2 = list(nx.bfs_tree(g.graph, source="32790644").nodes())
     assert test2 == check2
 
-    assert len(test) == len(check) #check that the right number of nodes are being traversed
+    assert len(test) == total_nodes #check that all nodes in the graph are being traversed
 
     #test instance edge cases
     with pytest.raises(ValueError): #start node not in the graph
